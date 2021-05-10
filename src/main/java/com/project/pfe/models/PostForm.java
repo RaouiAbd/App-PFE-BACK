@@ -1,12 +1,12 @@
 package com.project.pfe.models;
+
 import lombok.Data;
-import org.springframework.web.multipart.MultipartFile;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 public class PostForm {
-    private LocalDate dateOfPost;
-    private String photoName;
+    private LocalDateTime dateOfPost;
+    private Group group;
     private String content;
     private AppUser creator;
 }

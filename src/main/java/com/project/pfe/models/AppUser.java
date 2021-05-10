@@ -1,5 +1,6 @@
 package com.project.pfe.models;
 
+
 import com.fasterxml.jackson.annotation.JsonSetter;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,6 @@ public class AppUser {
     private String email;
     private String function;
     private String mobile;
-    private Team team;
     private String password;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<AppRole> roles = new ArrayList<>();
@@ -56,9 +56,6 @@ public class AppUser {
 
     public void setMobile(String mobile){this.mobile = mobile;}
 
-    public Team getTeam(){return team;}
-
-    public void setTeam(Team team){this.team=team;}
 
     public String getPassword() {
         return password;
@@ -68,6 +65,7 @@ public class AppUser {
     public void setPassword(String password) {
         this.password = password;
     }
+
 
     public List<AppRole> getRoles() {
         return roles;

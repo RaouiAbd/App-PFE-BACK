@@ -1,12 +1,8 @@
 package com.project.pfe;
 
 import com.project.pfe.Service.AccountService;
-import com.project.pfe.dao.PostRepository;
-import com.project.pfe.dao.RoleRepository;
-import com.project.pfe.models.AppRole;
-import com.project.pfe.models.AppUser;
-import com.project.pfe.models.Post;
-import com.project.pfe.models.Team;
+import com.project.pfe.dao.*;
+import com.project.pfe.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,6 +12,9 @@ import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Arrays;
 
 @SpringBootApplication
 public class PfeApplication {
@@ -26,6 +25,16 @@ public class PfeApplication {
     private RoleRepository roleRepository;
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private EventRepository eventRepository;
+    @Autowired
+    private GroupRepository groupRepository;
+    @Autowired
+    private PostRepository postRepository;
+    @Autowired
+    private CommentRepository commentRepository;
+    @Autowired
+    private DiscussionRepository discussionRepository;
 
     @Bean
     public BCryptPasswordEncoder getBCPE(){
@@ -36,17 +45,42 @@ public class PfeApplication {
     }
 
     @Bean
-    CommandLineRunner start(PostRepository postRepository){
+    CommandLineRunner start(){
         return args -> {
             repositoryRestConfiguration.exposeIdsFor(AppUser.class);
+            repositoryRestConfiguration.exposeIdsFor(Group.class);
             roleRepository.save(new AppRole(null,"USER"));
             roleRepository.save(new AppRole(null,"ADMIN"));
-            AppUser appUser = new AppUser(null, "admin",
-                    "abdelazizraoui3@gmail.com","Administrateur", "0653459000",
-                    Team.IT, "Abuwalid1997",null);
-            accountService.saveUser(appUser);
+            roleRepository.save(new AppRole(null, "RESP"));
+            AppUser appUser = accountService.saveUser(new AppUser(null, "admin",
+                    "abdelazizraoui3@gmail.com","Administrateur",
+                    "0653459000"
+                    , "Abuwalid1997",null));
             accountService.addRoleToUser("admin", "ADMIN");
             accountService.addRoleToUser("admin", "USER");
+            AppUser receiver = accountService.saveUser(new AppUser(null, "receiver",
+                    "abdelazizraoui3@gmail.com","Administrateur",
+                    "0653459000"
+                    , "Abuwalid1997",null));
+            accountService.addRoleToUser("receiver", "USER");
+            Event event = eventRepository.save(new Event(null, "Event",
+                    LocalDateTime.of(LocalDate.of(2021,4, 23),
+                            LocalTime.of(10, 30))));
+            Group groupGeneral = groupRepository.save(new Group(null, "Général",
+                    null,Arrays.asList(appUser)));
+            Post post=postRepository.save(new Post(null, LocalDateTime.of(
+                    LocalDate.of(2021, 3, 10),
+                    LocalTime.of(15, 30)), "Test",
+                    groupGeneral, null,appUser, null));
+            Comment comment = commentRepository.save(new Comment(null, "hhhh", post, appUser));
+            discussionRepository.save(new Discussion(null, LocalDateTime.of(
+                    LocalDate.of(2021, 3, 10),
+                    LocalTime.of(15, 30)), "Test",appUser,receiver,null));
+            discussionRepository.save(new Discussion(null, LocalDateTime.of(
+                    LocalDate.of(2021, 3, 10),
+                    LocalTime.of(15, 30)), "hhhhh",appUser,null,null));
+
+
         };
     }
 
