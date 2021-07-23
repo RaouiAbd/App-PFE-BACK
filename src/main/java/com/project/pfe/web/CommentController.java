@@ -9,6 +9,7 @@ import com.project.pfe.models.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,16 +24,16 @@ public class CommentController {
     private PostRepository postRepository;
 
     @GetMapping("/comment/post/{idPost}")
-    private List<Comment> fetchComments(@PathVariable Long idPost){
+    public List<Comment> fetchComments(@PathVariable Long idPost){
         Optional<Post> optionalPost = postRepository.findById(idPost);
         if(optionalPost.isPresent()){
             Post post = optionalPost.get();
             return post.getCommentaires();
         }
-        return null;
+        return Collections.emptyList();
     }
     @PostMapping("comment/{username}/{idPost}")
-    private void addComment(@PathVariable String username, @PathVariable  Long idPost,@RequestBody Comment c){
+    public void addComment(@PathVariable String username, @PathVariable  Long idPost,@RequestBody Comment c){
         AppUser  appUser = userRepository.findByUsername(username);
         Optional<Post> optionalPost = postRepository.findById(idPost);
         if(optionalPost.isPresent()){

@@ -1,7 +1,7 @@
-package com.project.pfe.sec;
+package com.project.pfe.security;
 
 
-import com.project.pfe.Service.UserDetailsServiceImpl;
+import com.project.pfe.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

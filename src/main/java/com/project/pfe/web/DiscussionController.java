@@ -1,6 +1,6 @@
 package com.project.pfe.web;
 
-import com.project.pfe.Service.DatabaseFileService;
+import com.project.pfe.service.DatabaseFileService;
 import com.project.pfe.dao.DiscussionRepository;
 import com.project.pfe.dao.UserRepository;
 import com.project.pfe.models.*;

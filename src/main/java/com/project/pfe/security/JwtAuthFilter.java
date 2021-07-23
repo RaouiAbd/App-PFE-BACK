@@ -1,4 +1,4 @@
-package com.project.pfe.sec;
+package com.project.pfe.security;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,9 +35,6 @@ public class JwtAuthFilter extends UsernamePasswordAuthenticationFilter {
         }catch (Exception e){
             throw new RuntimeException(e);
         }
-        System.out.println("************************");
-        System.out.println("username : "+appUser.getUsername());
-        System.out.println("password : "+appUser.getPassword());
         return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 appUser.getUsername(),
                 appUser.getPassword()));
@@ -54,6 +51,5 @@ public class JwtAuthFilter extends UsernamePasswordAuthenticationFilter {
                 .claim("roles",springUser.getAuthorities())
                 .compact();
         response.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX+jwt);
-        //super.successfulAuthentication(request, response, chain, authResult);
     }
 }

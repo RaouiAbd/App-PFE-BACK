@@ -8,10 +8,11 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.io.Serializable;
 
+
 @Entity
 @Table(name = "files")
 @NoArgsConstructor  @Data @ToString
-public class DatabaseFile{
+public class DatabaseFile implements Serializable {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")

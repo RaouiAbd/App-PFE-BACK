@@ -1,6 +1,6 @@
 package com.project.pfe.web;
 
-import com.project.pfe.Service.DatabaseFileService;
+import com.project.pfe.service.DatabaseFileService;
 import com.project.pfe.models.DatabaseFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.http.HttpServletRequest;

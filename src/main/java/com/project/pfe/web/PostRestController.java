@@ -1,6 +1,6 @@
 package com.project.pfe.web;
 
-import com.project.pfe.Service.DatabaseFileService;
+import com.project.pfe.service.DatabaseFileService;
 import com.project.pfe.dao.GroupRepository;
 import com.project.pfe.dao.NotificationRepository;
 import com.project.pfe.dao.PostRepository;
@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,9 +31,10 @@ public class PostRestController {
 
 
     @GetMapping(path = "/post")
-    public List<Post> fetchPosts(){
-        return postRepository.findAllByOrderByIdDesc();
+    public List<Post> fetchPosts() {
+        return postRepository.findAll();
     }
+
     @PostMapping(path = "/postWithFile", consumes = {"multipart/form-data"})
     @ResponseBody
     public void addPost( @RequestPart("properties") @Valid PostForm p,
@@ -66,7 +68,7 @@ public class PostRestController {
             Group group = groupOptional.get();
             return group.getPosts();
         } else{
-            return null;
+            return Collections.emptyList();
         }
     }
     @GetMapping("/comments/post/{id}")
@@ -76,7 +78,7 @@ public class PostRestController {
             Post post = postOptional.get();
             return post.getCommentaires();
         } else{
-            return null;
+            return Collections.emptyList();
         }
     }
 

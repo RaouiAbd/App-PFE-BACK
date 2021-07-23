@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.project.pfe.Service.DatabaseFileService;
+import com.project.pfe.service.DatabaseFileService;
 import com.project.pfe.models.DatabaseFile;
 import com.project.pfe.models.Response;
 import org.springframework.beans.factory.annotation.Autowired;

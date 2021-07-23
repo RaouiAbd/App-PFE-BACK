@@ -1,6 +1,6 @@
 package com.project.pfe;
 
-import com.project.pfe.Service.AccountService;
+import com.project.pfe.service.AccountService;
 import com.project.pfe.dao.*;
 import com.project.pfe.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 @SpringBootApplication
 public class PfeApplication {
@@ -35,6 +38,10 @@ public class PfeApplication {
     private CommentRepository commentRepository;
     @Autowired
     private DiscussionRepository discussionRepository;
+    @Autowired
+    private TaskRepository taskRepository;
+    @Autowired
+    private ProjectRepository projectRepository;
 
     @Bean
     public BCryptPasswordEncoder getBCPE(){
@@ -52,35 +59,32 @@ public class PfeApplication {
             roleRepository.save(new AppRole(null,"USER"));
             roleRepository.save(new AppRole(null,"ADMIN"));
             roleRepository.save(new AppRole(null, "RESP"));
-            AppUser appUser = accountService.saveUser(new AppUser(null, "admin",
+            String username = "admin";
+            AppUser appUser = accountService.saveUser(new AppUser(null, username,
                     "abdelazizraoui3@gmail.com","Administrateur",
                     "0653459000"
                     , "Abuwalid1997",null));
-            accountService.addRoleToUser("admin", "ADMIN");
-            accountService.addRoleToUser("admin", "USER");
-            AppUser receiver = accountService.saveUser(new AppUser(null, "receiver",
-                    "abdelazizraoui3@gmail.com","Administrateur",
+            accountService.addRoleToUser(username, "ADMIN");
+            accountService.addRoleToUser(username, "USER");
+            AppUser receiver = accountService.saveUser(new AppUser(null, "Badi",
+                    "abdelazizraoui3@gmail.com","IT Responsible",
                     "0653459000"
                     , "Abuwalid1997",null));
-            accountService.addRoleToUser("receiver", "USER");
-            Event event = eventRepository.save(new Event(null, "Event",
-                    LocalDateTime.of(LocalDate.of(2021,4, 23),
-                            LocalTime.of(10, 30))));
-            Group groupGeneral = groupRepository.save(new Group(null, "Général",
+            AppUser receive = accountService.saveUser(new AppUser(null, "Chakir",
+                    "abdelazizraoui3@gmail.com","Risque Responsible",
+                    "0653459000"
+                    , "Abuwalid1997",null));
+            accountService.addRoleToUser("Badi", "USER");
+            Group groupGeneral = groupRepository.save(new Group(null, "General",
                     null,Arrays.asList(appUser)));
-            Post post=postRepository.save(new Post(null, LocalDateTime.of(
-                    LocalDate.of(2021, 3, 10),
-                    LocalTime.of(15, 30)), "Test",
-                    groupGeneral, null,appUser, null));
-            Comment comment = commentRepository.save(new Comment(null, "hhhh", post, appUser));
-            discussionRepository.save(new Discussion(null, LocalDateTime.of(
-                    LocalDate.of(2021, 3, 10),
-                    LocalTime.of(15, 30)), "Test",appUser,receiver,null));
-            discussionRepository.save(new Discussion(null, LocalDateTime.of(
-                    LocalDate.of(2021, 3, 10),
-                    LocalTime.of(15, 30)), "hhhhh",appUser,null,null));
-
-
+            Group groupIT = groupRepository.save(new Group(null, "IT",
+                    null,Arrays.asList(appUser)));
+            Project project1 = projectRepository.save(new Project(null, "project finance", null));
+            Project project2 = projectRepository.save(new Project(null, "project risque", null));
+            Task task1 = new Task(null, "task 1 of project 1", true,project1, null);
+            taskRepository.save(task1);
+            Task task2 = taskRepository.save(new Task(null, "task 2 of project 1", true,project1, null));
+            Task task3 = taskRepository.save(new Task(null, "task of project 2", true,project2, null));
         };
     }
 

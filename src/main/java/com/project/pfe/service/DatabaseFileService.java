@@ -1,4 +1,4 @@
-package com.project.pfe.Service;
+package com.project.pfe.service;
 
 import com.project.pfe.dao.DatabaseFileRepository;
 import com.project.pfe.exception.FileNotFoundException;
@@ -10,6 +10,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Objects;
 
 @Service
 public class DatabaseFileService {
@@ -19,7 +20,7 @@ public class DatabaseFileService {
 
     public DatabaseFile storeFile(MultipartFile file) {
         // Normalize file name
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
 
         try {
             // Check if the file's name contains invalid characters

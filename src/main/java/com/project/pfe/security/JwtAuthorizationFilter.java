@@ -1,4 +1,4 @@
-package com.project.pfe.sec;
+package com.project.pfe.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -23,6 +23,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         response.addHeader("Access-Control-Allow-Origin","*");
+        response.addHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
         response.addHeader("Access-Control-Allow-Headers",
                 "Origin, Accept, X-Requested-With, Content-Type," +
                         "Access-Control-Request-Method," +
@@ -45,9 +46,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             String username = claims.getSubject();
             Collection<GrantedAuthority> authorities = new ArrayList<>();
             ArrayList<Map<String,String>> roles = (ArrayList<Map<String,String>>)claims.get("roles");
-            roles.forEach(r->{
-                authorities.add(new SimpleGrantedAuthority(r.get("authority")));
-            });
+            roles.forEach(r-> authorities.add(new SimpleGrantedAuthority(r.get("authority"))));
             UsernamePasswordAuthenticationToken authenticationToken =
                     new UsernamePasswordAuthenticationToken(username,null,authorities);
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
