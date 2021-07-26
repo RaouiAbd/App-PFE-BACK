@@ -66,12 +66,8 @@ public class PfeApplication {
                     , "Abuwalid1997",null));
             accountService.addRoleToUser(username, "ADMIN");
             accountService.addRoleToUser(username, "USER");
-            AppUser receiver = accountService.saveUser(new AppUser(null, "Badi",
+            AppUser badi = accountService.saveUser(new AppUser(null, "Badi",
                     "abdelazizraoui3@gmail.com","IT Responsible",
-                    "0653459000"
-                    , "Abuwalid1997",null));
-            AppUser receive = accountService.saveUser(new AppUser(null, "Chakir",
-                    "abdelazizraoui3@gmail.com","Risque Responsible",
                     "0653459000"
                     , "Abuwalid1997",null));
             accountService.addRoleToUser("Badi", "USER");
@@ -79,8 +75,8 @@ public class PfeApplication {
                     null,Arrays.asList(appUser)));
             Group groupIT = groupRepository.save(new Group(null, "IT",
                     null,Arrays.asList(appUser)));
-            Project project1 = projectRepository.save(new Project(null, "project finance", null));
-            Project project2 = projectRepository.save(new Project(null, "project risque", null));
+            Project project1 = projectRepository.save(new Project(null, "project general", groupGeneral,null));
+            Project project2 = projectRepository.save(new Project(null, "project IT", groupIT,null));
             Task task1 = new Task(null, "task 1 of project 1", true,project1, null);
             taskRepository.save(task1);
             Task task2 = taskRepository.save(new Task(null, "task 2 of project 1", true,project1, null));

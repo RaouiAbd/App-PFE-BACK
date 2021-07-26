@@ -1,5 +1,6 @@
 package com.project.pfe.web;
 
+import com.project.pfe.dao.GroupRepository;
 import com.project.pfe.dao.ProjectRepository;
 import com.project.pfe.models.Project;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -15,6 +17,8 @@ import java.util.List;
 public class ProjectRestController {
     @Autowired
     private ProjectRepository projectRepository;
+    @Autowired
+    private GroupRepository groupRepository;
 
     @GetMapping("/projects")
     public List<Project> getProjects(){
@@ -23,6 +27,16 @@ public class ProjectRestController {
     @GetMapping("/projects/{id}")
     public Project getProject(@PathVariable Long id){
         return projectRepository.findProjectById(id);
+    }
+    @GetMapping("/projects//group/{idGroup}")
+    public List<Project> getProjectsByGroup(@PathVariable Long idGroup){
+        List<Project> projectsTemp = new ArrayList<>();
+        List<Project> projects = projectRepository.findAll();
+        for(Project p : projects){
+            if(p.getGroup().getId() == idGroup)
+                projectsTemp.add(p);
+        }
+        return projectsTemp;
     }
     @PostMapping("/projects")
     public ResponseEntity addProject(@RequestBody Project project) throws URISyntaxException {

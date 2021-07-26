@@ -18,6 +18,8 @@ public class Project implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @ManyToOne
+    private Group group;
     @OneToMany(mappedBy = "project")
     @JsonIgnore
     private Collection<Task> tasks = new ArrayList<>();

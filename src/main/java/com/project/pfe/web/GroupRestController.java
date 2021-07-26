@@ -52,7 +52,7 @@ public class GroupRestController {
             Group group = groupOptional.get();
             for(AppUser forUser: group.getUsers()){
                 if(forUser.getUsername().equals(user.getUsername()))
-                    throw new RuntimeException("Ce membre existe déjà");
+                    throw new RuntimeException("This member already exist");
 
             }
                 group.getUsers().add(user);
