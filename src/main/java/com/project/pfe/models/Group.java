@@ -19,6 +19,8 @@ public class Group implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
+    @ManyToOne
+    private AppUser responsible;
     @OneToMany(mappedBy = "group")
     private List<Post> posts= new ArrayList<>();
     @ManyToMany

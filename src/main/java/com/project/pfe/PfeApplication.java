@@ -70,17 +70,26 @@ public class PfeApplication {
                     "abdelazizraoui3@gmail.com","IT Responsible",
                     "0653459000"
                     , "Abuwalid1997",null));
+            AppUser chakir = accountService.saveUser(new AppUser(null, "Chakir",
+                    "abdelazizraoui3@gmail.com","IT Responsible",
+                    "0653459000"
+                    , "Abuwalid1997",null));
             accountService.addRoleToUser("Badi", "USER");
-            Group groupGeneral = groupRepository.save(new Group(null, "General",
+            Group groupGeneral = groupRepository.save(new Group(null, "General",badi,
                     null,Arrays.asList(appUser)));
-            Group groupIT = groupRepository.save(new Group(null, "IT",
+            Group groupIT = groupRepository.save(new Group(null, "IT", badi,
                     null,Arrays.asList(appUser)));
-            Project project1 = projectRepository.save(new Project(null, "project general", groupGeneral,null));
-            Project project2 = projectRepository.save(new Project(null, "project IT", groupIT,null));
-            Task task1 = new Task(null, "task 1 of project 1", true,project1, null);
+            Project project1 = projectRepository.save(new Project(null, "project general",
+                    groupGeneral,null));
+            Project project2 = projectRepository.save(new Project(null, "project IT",
+                    groupIT,null));
+            Task task1 = new Task(null, "task 1 of project 1", true,
+                    chakir,project1, null);
             taskRepository.save(task1);
-            Task task2 = taskRepository.save(new Task(null, "task 2 of project 1", true,project1, null));
-            Task task3 = taskRepository.save(new Task(null, "task of project 2", true,project2, null));
+            Task task2 = taskRepository.save(new Task(null, "task 2 of project 1", true,
+                    chakir,project1, null));
+            Task task3 = taskRepository.save(new Task(null, "task of project 2", true,
+                    chakir,project2, null));
         };
     }
 

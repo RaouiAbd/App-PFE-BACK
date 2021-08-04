@@ -29,6 +29,11 @@ public class GroupRestController {
     public List<Group> fetchGroups(){
          return groupRepository.findAll();
     }
+    @GetMapping("/group/{id}")
+    public Group fetchGroupById(@PathVariable Long id)
+    {
+        return groupRepository.findGroupById(id);
+    }
 
     @DeleteMapping("/group/{id}")
     public ResponseEntity deleteGroup(@PathVariable(name="id") Long id){
@@ -59,6 +64,16 @@ public class GroupRestController {
                 groupRepository.save(group);
 
         }
+    }
+    @PutMapping("/group/user/{idGroup}/{username}")
+    public void addRespToGroup(@PathVariable Long idGroup, @PathVariable String username){
+        Group group = groupRepository.findGroupById(idGroup);
+        AppUser user = userRepository.findByUsername(username);
+        group.setResponsible(user);
+        if(!group.getUsers().stream().anyMatch(u -> u.getUsername().equals(user.getUsername()))){
+            group.getUsers().add(user);
+        }
+        groupRepository.save(group);
     }
     @DeleteMapping("/group/user/{idGroup}/{username}")
     public void deleteUserFromGroup(@PathVariable Long idGroup, @PathVariable String username){

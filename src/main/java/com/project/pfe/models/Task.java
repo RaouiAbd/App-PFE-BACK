@@ -18,6 +18,8 @@ public class Task implements Serializable {
     private String description;
     private Boolean isOpen;
     @ManyToOne
+    private AppUser user;
+    @ManyToOne
     private Project project;
     @OneToMany
     private List<CommentTask> comments = new ArrayList<>();

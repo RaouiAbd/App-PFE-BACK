@@ -63,6 +63,7 @@ public class TaskRestController {
         Task savedTask = new Task();
         savedTask.setDescription(task.getDescription());
         savedTask.setIsOpen(task.getIsOpen());
+        savedTask.setUser(task.getUser());
         Project project = projectRepository.findProjectById(id);
         savedTask.setProject(project);
         taskRepository.save(savedTask);

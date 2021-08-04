@@ -11,5 +11,5 @@ import java.util.Optional;
 @CrossOrigin("*")
 public interface GroupRepository extends JpaRepository<Group, Long> {
     public Optional<Group> findById(Long id);
-    public Group findGroupsById(Long id);
+    public Group findGroupById(Long idGroup);
 }
